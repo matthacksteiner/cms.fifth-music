@@ -33,28 +33,7 @@ tabs:
             type: toggle
             default: false
           captionObject:
-            type: object
-            label: Beschriftung Optionen
-            icon: palette
-            when:
-              captionToggle: true
-            fields:
-              captionTitle:
-                label: Title
-                type: text
-                width: 4/6
-              captionOptions:
-                label: Text Optionen
-                extends: groups/textGroup
-              captionAlign:
-                extends: fields/captionAlign
-              captionControls:
-                label: Optionen
-                type: checkboxes
-                width: 1/4
-                columns: 1
-                options:
-                  overlay: Overlay
+            extends: fields/captionObject
       - width: 1/3
         fields:
           linkToggle:

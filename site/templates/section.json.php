@@ -55,17 +55,37 @@ if ($page->children()->isNotEmpty()) {
 
 function getSettings(\Kirby\Cms\Page $page)
 {
+  // Get site object for design fallbacks
+  $site = site();
+
+  // Helper function to get value with fallback to design settings
+  $getValueWithFallback = function ($value, $fallbackSiteField) use ($site) {
+    if ($value === 'default') {
+      return $site->{$fallbackSiteField}()->value() ?: '16';
+    }
+    return ($value !== null && $value !== '') ? $value : '16';
+  };
+
+  // Get the actual values from page fields
+  $gap = $page->displayGrid()->toObject()->gap()->value();
+  $gapMobile = $page->displayGrid()->toObject()->gapMobile()->value();
+  $gapHorizontal = $page->displayGrid()->toObject()->gapHorizontal()->value();
+  $gapHorizontalMobile = $page->displayGrid()->toObject()->gapHorizontalMobile()->value();
+
   return [
     'ratio' => $page->displayRatio()->toObject()->ratio()->value() ?: '16/9',
     'ratioMobile' => $page->displayRatio()->toObject()->ratioMobile()->value() ?: '16/9',
     'grid' => [
       'elements' => $page->displayElements()->toObject()->elements()->value() ?: '10',
-      'gap' => $page->displayGrid()->toObject()->gap()->value() ?: '16',
-      'gapMobile' => $page->displayGrid()->toObject()->gapMobile()->value() ?: '16',
+      'gap' => $getValueWithFallback($gap, 'gridBlockDesktop'),
+      'gapMobile' => $getValueWithFallback($gapMobile, 'gridBlockMobile'),
+      'gapHorizontal' => $getValueWithFallback($gapHorizontal, 'gridGapDesktop'),
+      'gapHorizontalMobile' => $getValueWithFallback($gapHorizontalMobile, 'gridGapMobile'),
       'span' => $page->displayGrid()->toObject()->span()->value() ?: '6',
       'spanMobile' => $page->displayGrid()->toObject()->spanMobile()->value() ?: '6',
     ],
     'title' => [
+      'toggle' => $page->fontTitleToggle()->toBool(true),
       'level' => $page->fontTitle()->toObject()->level()->value() ?: 'h2',
       'font' => $page->fontTitle()->toObject()->titleFont()->value(),
       'size' => $page->fontTitle()->toObject()->titleSize()->value(),
@@ -73,10 +93,17 @@ function getSettings(\Kirby\Cms\Page $page)
       'align' => $page->fontTitle()->toObject()->titleAlign()->value(),
     ],
     'text' => [
+      'toggle' => $page->fontTextToggle()->toBool(true),
       'font' => $page->fontText()->toObject()->textFont()->value(),
       'size' => $page->fontText()->toObject()->textSize()->value(),
       'color' => $page->fontText()->toObject()->textColor()->value(),
       'align' => $page->fontText()->toObject()->textAlign()->value(),
+    ],
+    'caption' => [
+      'align' => $page->captionAlign()->value() ?: 'bottom',
+      'controls' => $page->captionControls()->split(','),
+      'overlayRange' => $page->captionOverlayRange()->toInt() ?: 50,
+      'color' => $page->captionColor()->value() ?: '#000000',
     ]
   ];
 }
