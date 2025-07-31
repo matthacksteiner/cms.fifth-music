@@ -1,9 +1,5 @@
 <?php
 
-use Kirby\Filesystem\Dir;
-use Kirby\Filesystem\F;
-use Kirby\Http\Response;
-
 /*
 |--------------------------------------------------------------------------
 | Kirby Configuration Array
@@ -35,32 +31,8 @@ return [
 			],
 		];
 	},
-	'routes' => [
-		[
-			'pattern'  => 'index.json',
-			'language' => '*',
-			'method'   => 'GET',
-			'action'   => function () {
-				return indexJson();
-			}
-		],
-		[
-			'pattern'  => 'global.json',
-			'language' => '*',
-			'method'   => 'GET',
-			'action'   => function () {
-				return globalJson();
-			}
-		],
-		[
-			'pattern'  => '/',
-			'method'   => 'GET',
-			'action'   => function () {
-				return go('/panel');
-			}
-		]
-	],
 ];
+<<<<<<< HEAD
 
 
 /*
@@ -457,3 +429,5 @@ function globalJson()
 {
 	return Response::json(globalJsonData());
 }
+=======
+>>>>>>> template/main
