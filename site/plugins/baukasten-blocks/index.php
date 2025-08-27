@@ -301,6 +301,87 @@ function getBlockArray(\Kirby\Cms\Block $block)
             $blockArray['content']['buttonlocal'] = $block->buttonlocal()->toBool(false);
             break;
 
+        case 'contactForm':
+            $blockArray['content']['formName'] = $block->formName()->value();
+            $blockArray['content']['emailSubject'] = $block->emailSubject()->value();
+            $blockArray['content']['successPage'] = getLinkArray($block->successPage());
+            $blockArray['content']['spamProtection'] = $block->spamProtection()->value();
+            $blockArray['content']['fieldSpacing'] = $block->fieldSpacing()->value();
+            $blockArray['content']['formWidth'] = $block->formWidth()->value();
+            $blockArray['content']['formAlign'] = $block->formAlign()->value();
+            $blockArray['content']['formBorderRadius'] = $block->formBorderRadius()->toInt();
+            $blockArray['content']['buttonLocal'] = $block->buttonLocal()->toBool(false);
+            $blockArray['content']['buttonAlign'] = $block->buttonAlign()->value();
+
+            // Process fields object with nested configurations
+            $fieldsObject = $block->fields()->toObject();
+            $blockArray['content']['fields'] = [
+                'firstname' => [
+                    'label' => $fieldsObject->firstname()->toObject()->label()->value(),
+                    'placeholder' => $fieldsObject->firstname()->toObject()->placeholder()->value(),
+                    'help' => $fieldsObject->firstname()->toObject()->help()->value(),
+                ],
+                'lastname' => [
+                    'label' => $fieldsObject->lastname()->toObject()->label()->value(),
+                    'placeholder' => $fieldsObject->lastname()->toObject()->placeholder()->value(),
+                    'help' => $fieldsObject->lastname()->toObject()->help()->value(),
+                ],
+                'email' => [
+                    'label' => $fieldsObject->email()->toObject()->label()->value(),
+                    'placeholder' => $fieldsObject->email()->toObject()->placeholder()->value(),
+                    'help' => $fieldsObject->email()->toObject()->help()->value(),
+                ],
+                'message' => [
+                    'label' => $fieldsObject->message()->toObject()->label()->value(),
+                    'placeholder' => $fieldsObject->message()->toObject()->placeholder()->value(),
+                    'rows' => $fieldsObject->message()->toObject()->rows()->toInt() ?: 5,
+                    'help' => $fieldsObject->message()->toObject()->help()->value(),
+                ],
+                'submitButton' => [
+                    'placeholder' => $fieldsObject->submitButton()->toObject()->placeholder()->value(),
+                ],
+                'successMessage' => [
+                    'text' => $fieldsObject->successMessage()->toObject()->text()->value(),
+                ],
+                'errorMessage' => [
+                    'text' => $fieldsObject->errorMessage()->toObject()->text()->value(),
+                ],
+            ];
+
+            // Process textGroup object
+            $textGroupObject = $block->textGroup()->toObject();
+            $blockArray['content']['textGroup'] = [
+                'textfont' => $textGroupObject->textFont()->value(),
+                'textcolor' => $textGroupObject->textColor()->value(),
+                'textsize' => $textGroupObject->textSize()->value(),
+            ];
+
+            // Process buttonSettings object if buttonLocal is true
+            if ($block->buttonLocal()->toBool(false)) {
+                $buttonSettingsObject = $block->buttonSettings()->toObject();
+                $blockArray['content']['buttonSettings'] = [
+                    'buttonfont' => $buttonSettingsObject->buttonFont()->value(),
+                    'buttonfontsize' => $buttonSettingsObject->buttonFontSize()->value(),
+                    'buttonborderradius' => $buttonSettingsObject->buttonBorderRadius()->toInt(),
+                    'buttonborderwidth' => $buttonSettingsObject->buttonBorderWidth()->toInt(),
+                    'buttonpadding' => $buttonSettingsObject->buttonPadding()->toInt(),
+                ];
+
+                $buttonColorsObject = $block->buttonColors()->toObject();
+                $blockArray['content']['buttonColors'] = [
+                    'buttonbackgroundcolor' => $buttonColorsObject->buttonBackgroundColor()->value(),
+                    'buttonbackgroundcoloractive' => $buttonColorsObject->buttonBackgroundColorActive()->value(),
+                    'buttontextcolor' => $buttonColorsObject->buttonTextColor()->value(),
+                    'buttontextcoloractive' => $buttonColorsObject->buttonTextColorActive()->value(),
+                    'buttonbordercolor' => $buttonColorsObject->buttonBorderColor()->value(),
+                    'buttonbordercoloractive' => $buttonColorsObject->buttonBorderColorActive()->value(),
+                ];
+            } else {
+                $blockArray['content']['buttonSettings'] = null;
+                $blockArray['content']['buttonColors'] = null;
+            }
+            break;
+
         case 'featured':
             $items = [];
 
