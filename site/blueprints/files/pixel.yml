@@ -26,7 +26,7 @@ tabs:
   settings:
     label: Einstellungen
     columns:
-      - width: 1/3
+      - width: 1/4
         fields:
           captionToggle:
             label: Beschriftung?
@@ -34,12 +34,26 @@ tabs:
             default: false
           captionObject:
             extends: fields/captionObject
-      - width: 1/3
+      - width: 1/4
+        fields:
+          lightbox:
+            label: Lightbox?
+            type: toggle
+            width: 1/2
+            default: false
+            when:
+              linkToggle: false
+            help: Bild in Lightbox öffnen (nicht kompatibel mit Link)
+      - width: 1/4
         fields:
           linkToggle:
             label: Link?
             type: toggle
+            width: 1/2
             default: false
+            when:
+              lightbox: false
+            help: Link hinzufügen (nicht kompatibel mit Lightbox)
           linkExternal:
             when:
               linkToggle: true
@@ -49,7 +63,7 @@ tabs:
                 options:
                   - page
                   - url
-      - width: 1/3
+      - width: 1/4
         fields:
           copyrightToggle:
             label: Copyright?
@@ -77,7 +91,7 @@ tabs:
               copyrightPosition:
                 label: Position
                 type: select
-                width: 1/3
+                width: 1/4
                 options:
                   topleft: Oben Links
                   topright: Oben Rechts

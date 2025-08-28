@@ -171,6 +171,7 @@ function getBlockArray(\Kirby\Cms\Block $block)
                 $image = getImageArray($file1, $ratios['ratio'], $ratios['ratioMobile']);
                 $image = addCopyrightProperties($image, $file1);
             }
+            $blockArray['content']['lightbox'] = $block->lightbox()->toBool(false);
             $blockArray['content']['abovefold'] = $block->abovefold()->toBool(false);
             $blockArray['content']['image'] = $image;
             break;
@@ -480,6 +481,7 @@ function getImageArray($file, $ratio = null, $ratioMobile = null)
         'captionalign'      => $file->captionobject()->toObject()->captionalign()->value(),
         'captionOverlayRange' => $file->captionobject()->toObject()->captionOverlayRange()->toInt() ?: 50,
         'captionColor'      => $file->captionobject()->toObject()->captionColor()->value() ?: '#000000',
+        'lightbox'          => $file->lightbox()->toBool(false),
         'linktoggle'        => $file->linktoggle()->toBool(false),
         'linkexternal'      => getLinkArray($file->linkexternal()),
     ];

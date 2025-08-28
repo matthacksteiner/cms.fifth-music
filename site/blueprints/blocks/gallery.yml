@@ -33,7 +33,7 @@ tabs:
         extends: fields/ratio
         label: Seitenverhältnis 🖥️
       galleryHeadline:
-        label: Gallerie
+        label: Galerie
         type: headline
         numbered: false
       layoutType:
