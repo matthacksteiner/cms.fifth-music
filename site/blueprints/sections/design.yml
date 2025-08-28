@@ -273,10 +273,13 @@ columns:
             when:
               headerActive: true
             fields:
+              typographyHeadline:
+                label: Typografie
+                type: headline
               headerFont:
                 label: Schriftart
                 type: select
-                width: 1/4
+                width: 1/2
                 translate: false
                 options:
                   type: query
@@ -286,44 +289,67 @@ columns:
               headerFontSize:
                 label: Schriftgröße
                 type: select
-                width: 1/4
+                width: 1/2
                 translate: false
                 options:
                   type: query
                   query: site.fontSize.toStructure
                   text: "{{ structureItem.name}}"
                   value: "{{ structureItem.name}}"
-              headerGap:
-                type: gap
-                width: 2/4
+              colorsHeadline:
+                label: Farben
+                type: headline
               headerColor:
-                label: Farbe Text
+                label: Text Normal
                 type: select
                 default: primary
                 extends: fields/colors
-                width: 1/4
+                width: 1/2
                 translate: false
+                help: Textfarbe der Navigation im normalen Zustand
               headerColorActive:
-                label: Farbe Text Aktiv
+                label: Text Aktiv
                 type: select
                 default: primary
                 extends: fields/colors
-                width: 1/4
+                width: 1/2
                 translate: false
+                help: Textfarbe der Navigation beim Scrollen
               headerBackground:
-                label: Farbe Hintergrund
+                label: Hintergrund Normal
                 type: select
                 default: secondary
                 extends: fields/colors
-                width: 1/4
+                width: 1/2
                 translate: false
+                help: Hintergrundfarbe des Headers im normalen Zustand
               headerBackgroundActive:
-                label: Farbe Hintergrund Aktiv
+                label: Hintergrund Aktiv
                 type: select
                 default: secondary
                 extends: fields/colors
-                width: 1/4
+                width: 1/2
                 translate: false
+                help: Hintergrundfarbe des Headers beim Scrollen
+              currentPageHeadline:
+                label: Aktuelle Seite
+                type: headline
+              headerColorCurrent:
+                label: Text aktuell Normal
+                type: select
+                default: primary
+                extends: fields/colors
+                width: 1/2
+                translate: false
+                help: Textfarbe für aktive Navigationselemente
+              headerColorCurrentActive:
+                label: Text aktuell Aktiv
+                type: select
+                default: primary
+                extends: fields/colors
+                width: 1/2
+                translate: false
+                help: Textfarbe für aktive Navigationselemente beim Scrollen
           headerHamburger:
             type: object
             label: Hamburger
@@ -334,10 +360,13 @@ columns:
             when:
               headerActive: true
             fields:
+              hamburgerTypographyHeadline:
+                label: Typografie
+                type: headline
               hamburgerFont:
                 label: Schriftart
                 type: select
-                width: 1/4
+                width: 1/2
                 translate: false
                 options:
                   type: query
@@ -347,44 +376,67 @@ columns:
               hamburgerFontSize:
                 label: Schriftgröße
                 type: select
-                width: 1/4
+                width: 1/2
                 translate: false
                 options:
                   type: query
                   query: site.fontSize.toStructure
                   text: "{{ structureItem.name}}"
                   value: "{{ structureItem.name}}"
-              hmaburgerGap:
-                type: gap
-                width: 2/4
+              hamburgerColorsHeadline:
+                label: Menü Farben
+                type: headline
               hamburgerFontColor:
-                label: Farbe Text
+                label: Text
                 type: select
-                width: 1/4
+                width: 1/2
                 translate: false
                 default: primary
                 extends: fields/colors
-              hamburgerMenuColor:
-                label: Farbe Menu
-                type: select
-                width: 1/4
-                translate: false
-                default: primary
-                extends: fields/colors
-              hamburgerMenuColorActive:
-                label: Farbe Menu Aktiv
-                type: select
-                width: 1/4
-                translate: false
-                default: primary
-                extends: fields/colors
+                help: Textfarbe der mobilen Navigation
               hamburgerOverlay:
-                label: Farbe Overlay
+                label: Overlay
                 type: select
                 default: primary
                 extends: fields/colors
-                width: 1/4
+                width: 1/2
                 translate: false
+                help: Hintergrundfarbe des mobilen Menüs
+              hamburgerMenuColor:
+                label: Icon Normal
+                type: select
+                width: 1/2
+                translate: false
+                default: primary
+                extends: fields/colors
+                help: Farbe des Hamburger-Icons im normalen Zustand
+              hamburgerMenuColorActive:
+                label: Icon Aktiv
+                type: select
+                width: 1/2
+                translate: false
+                default: primary
+                extends: fields/colors
+                help: Farbe des Hamburger-Icons beim Scrollen
+              hamburgerCurrentHeadline:
+                label: Aktuelle Seite
+                type: headline
+              hamburgerFontColorCurrent:
+                label: Text aktuell Normal
+                type: select
+                default: primary
+                extends: fields/colors
+                width: 1/2
+                translate: false
+                help: Textfarbe für aktive mobile Navigationselemente
+              hamburgerFontColorCurrentActive:
+                label: Text aktuell Aktiv
+                type: select
+                default: primary
+                extends: fields/colors
+                width: 1/2
+                translate: false
+                help: Textfarbe für aktive mobile Navigationselemente beim Scrollen
 
   designButton:
     width: 1/1
@@ -405,18 +457,21 @@ columns:
             toggle: true
             help: Der Abstand zum Rand wird horizontal verdoppelt.
             fields:
+              typographyHeadline:
+                label: Typografie
+                type: headline
               buttonFont:
                 extends: fields/fontFile
                 required: false
-                width: 1/3
+                width: 1/2
                 translate: false
               buttonFontSize:
                 extends: fields/fontSize
                 translate: false
-                width: 1/3
-              buttonGap:
-                type: gap
-                width: 1/3
+                width: 1/2
+              stylingHeadline:
+                label: Styling
+                type: headline
               buttonBorderRadius:
                 label: Rand Rundung
                 type: number
@@ -446,53 +501,56 @@ columns:
             toggle: true
             translate: false
             fields:
+              backgroundHeadline:
+                label: Hintergrund
+                type: headline
               buttonBackgroundColor:
-                label: Farbe Hintergrund
+                label: Normal
                 type: select
                 default: primary
                 extends: fields/colors
-                width: 1/3
+                width: 1/2
                 translate: false
               buttonBackgroundColorActive:
-                label: Farbe Hintergrund Hover
+                label: Hover
                 type: select
                 default: primary
                 extends: fields/colors
-                width: 1/3
+                width: 1/2
                 translate: false
-              buttonGapColor1:
-                type: gap
-                width: 1/3
+              textHeadline:
+                label: Text
+                type: headline
               buttonTextColor:
-                label: Farbe Text
+                label: Normal
                 type: select
                 default: secondary
                 extends: fields/colors
-                width: 1/3
+                width: 1/2
                 translate: false
               buttonTextColorActive:
-                label: Farbe Text Hover
+                label: Hover
                 type: select
                 default: secondary
                 extends: fields/colors
-                width: 1/3
+                width: 1/2
                 translate: false
-              buttonGapColor2:
-                type: gap
-                width: 1/3
+              borderHeadline:
+                label: Rand
+                type: headline
               buttonBorderColor:
-                label: Rand Farbe
+                label: Normal
                 type: select
                 default: primary
                 extends: fields/colors
-                width: 1/3
+                width: 1/2
                 translate: false
               buttonBorderColorActive:
-                label: Rand Farbe Hover
+                label: Hover
                 type: select
                 default: primary
                 extends: fields/colors
-                width: 1/3
+                width: 1/2
                 translate: false
   designSection:
     width: 1/1
@@ -528,18 +586,21 @@ columns:
             width: 1/2
             toggle: true
             fields:
+              typographyHeadline:
+                label: Typografie
+                type: headline
               paginationFont:
                 extends: fields/fontFile
                 required: false
-                width: 1/3
+                width: 1/2
                 translate: false
               paginationFontSize:
                 extends: fields/fontSize
                 translate: false
-                width: 1/3
-              paginationGap:
-                type: gap
-                width: 1/3
+                width: 1/2
+              stylingHeadline:
+                label: Styling
+                type: headline
               paginationBorderRadius:
                 label: Rand Rundung
                 type: number
@@ -561,10 +622,27 @@ columns:
                 width: 1/3
                 after: px
                 translate: false
+              layoutHeadline:
+                label: Layout & Abstände
+                type: headline
               paginationMargin:
                 label: Abstand zwischen Elementen
                 type: number
                 placeholder: 10
+                width: 1/3
+                after: px
+                translate: false
+              paginationTop:
+                label: Abstand oben
+                type: number
+                placeholder: 20
+                width: 1/3
+                after: px
+                translate: false
+              paginationBottom:
+                label: Abstand unten
+                type: number
+                placeholder: 20
                 width: 1/3
                 after: px
                 translate: false
@@ -602,23 +680,6 @@ columns:
                     text: 39
                   - value: 42
                     text: 42
-              paginationGap2:
-                type: gap
-                width: 1/3
-              paginationTop:
-                label: Abstand oben
-                type: number
-                placeholder: 20
-                width: 1/3
-                after: px
-                translate: false
-              paginationBottom:
-                label: Abstand unten
-                type: number
-                placeholder: 20
-                width: 1/3
-                after: px
-                translate: false
           paginationColors:
             type: object
             label: Farben
@@ -627,73 +688,73 @@ columns:
             toggle: true
             translate: false
             fields:
-              paginationTextColorHeadline:
-                label: Farbe Text
+              textColorsHeadline:
+                label: Text
                 type: headline
               paginationTextColor:
-                label: Farbe
+                label: Normal
                 type: select
                 default: secondary
                 extends: fields/colors
                 width: 1/3
                 translate: false
               paginationTextColorHover:
-                label: Farbe Hover
+                label: Hover
                 type: select
                 default: secondary
                 extends: fields/colors
                 width: 1/3
                 translate: false
               paginationTextColorActive:
-                label: Farbe Aktiv
+                label: Aktiv
                 type: select
                 default: secondary
                 extends: fields/colors
                 width: 1/3
                 translate: false
-              paginationBackgroundColorHeadline:
-                label: Farbe Hintergrund
+              backgroundColorsHeadline:
+                label: Hintergrund
                 type: headline
               paginationBackgroundColor:
-                label: Farbe
+                label: Normal
                 type: select
                 default: primary
                 extends: fields/colors
                 width: 1/3
                 translate: false
               paginationBackgroundColorHover:
-                label: Farbe Hover
+                label: Hover
                 type: select
                 default: primary
                 extends: fields/colors
                 width: 1/3
                 translate: false
               paginationBackgroundColorActive:
-                label: Farbe Aktiv
+                label: Aktiv
                 type: select
                 default: primary
                 extends: fields/colors
                 width: 1/3
                 translate: false
-              paginationBorderColorHeadline:
-                label: Farbe Rand
+              borderColorsHeadline:
+                label: Rand
                 type: headline
               paginationBorderColor:
-                label: Farbe
+                label: Normal
                 type: select
                 default: primary
                 extends: fields/colors
                 width: 1/3
                 translate: false
               paginationBorderColorHover:
-                label: Farbe Hover
+                label: Hover
                 type: select
                 default: primary
                 extends: fields/colors
                 width: 1/3
                 translate: false
               paginationBorderColorActiv:
-                label: Farbe Aktiv
+                label: Aktiv
                 type: select
                 default: primary
                 extends: fields/colors

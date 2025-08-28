@@ -228,22 +228,22 @@ panel.plugin("baukasten-blocks-preview/preview", {
 		},
 		divider: `
 			<div class="k-divider k-grid">
-				<div class="k-column" data-width="1/4">
+				<div class="k-column">
 				<span>⬆️ 📱</span>
 				<input type="number" :value="content.spacingmobiletop" :placeholder="0" @input="update({ spacingmobiletop: $event.target.value })">
 				<span>px</span>
 				</div>
-				<div class="k-column" data-width="1/4">
+				<div class="k-column">
 				<span>⬇️ 📱</span>
 				<input type="number" :value="content.spacingmobilebottom" :placeholder="0" @input="update({ spacingmobilebottom: $event.target.value })">
 				<span>px</span>
 				</div>
-				<div class="k-column" data-width="1/4">
+				<div class="k-column">
 				<span>⬆️ 🖥️</span>
 				<input type="number" :value="content.spacingdesktoptop" :placeholder="0" @input="update({ spacingdesktoptop: $event.target.value })">
 				<span>px</span>
 				</div>
-				<div class="k-column" data-width="1/4">
+				<div class="k-column">
 				<span>⬇️ 🖥️</span>
 				<input type="number" :value="content.spacingdesktopbottom" :placeholder="0" @input="update({ spacingdesktopbottom: $event.target.value })">
 				<span>px</span>
