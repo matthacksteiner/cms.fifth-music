@@ -302,6 +302,30 @@ function getBlockArray(\Kirby\Cms\Block $block)
             $blockArray['content']['buttonlocal'] = $block->buttonlocal()->toBool(false);
             break;
 
+        case 'title':
+            $blockArray['content']['text'] = (string)$block->text();
+            break;
+
+        case 'accordion':
+            foreach ($block->acc()->toStructure() as $key => $item) {
+                $blockArray['content']['acc'][$key] = $item->toArray();
+            }
+            break;
+
+        case 'quoteSlider':
+            foreach ($block->acc()->toStructure() as $key => $item) {
+                $blockArray['content']['acc'][$key] = $item->toArray();
+            }
+            break;
+
+        case 'line':
+            // All line properties are already captured by base content
+            break;
+
+        case 'divider':
+            // All divider properties are already captured by base content
+            break;
+
         case 'contactForm':
             $blockArray['content']['formName'] = $block->formName()->value();
             $blockArray['content']['emailSubject'] = $block->emailSubject()->value();
