@@ -9,12 +9,16 @@ additional_fqdns: []
 database:
   type: mariadb
   version: "10.11"
-omit_containers: [db]
+omit_containers: [db, ddev-ssh-agent]
 use_dns_when_possible: true
 composer_version: "2"
 web_environment: []
 corepack_enable: false
 project_tld: test
+upload_dirs:
+  - media
+  - ../content
+  - ../storage
 # Key features of DDEV's config.yaml:
 
 # name: <projectname> # Name of the project, automatically provides

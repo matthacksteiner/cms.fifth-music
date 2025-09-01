@@ -40,6 +40,7 @@ class GlobalApi
             "defaultLang"           => getDefaultLanguage($kirby),
             "translations"          => getTranslations($kirby),
             "prefixDefaultLocale"   => option('prefixDefaultLocale'),
+            "maintenanceToggle"     => ($maintenancePage = $site->find('maintenance')) ? $maintenancePage->maintenanceToggle()->toBool() : false,
             "allLang"               => getAllLanguages($kirby),
             "favicon"               => getFavicon($site),
             "frontendUrl"           => (string)$site->frontendUrl(),

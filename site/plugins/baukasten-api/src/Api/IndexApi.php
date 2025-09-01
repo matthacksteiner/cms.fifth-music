@@ -29,6 +29,7 @@ class IndexApi
      */
     public static function getData()
     {
+        $site = site();
         $kirby = kirby();
         $index = [];
 

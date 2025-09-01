@@ -1,17 +1,18 @@
 # CRUSH.md - Coding Guidelines and Commands for Baukasten Kirby CMS
 
 ## Build/Run Commands
-- Start development server: `composer run dev` or use DDEV: `ddev start`
-- Build assets: Check package.json in relevant plugin directories
+- Start development server: Use DDEV with `ddev start` or similar local development environment
+- Build assets: Check package.json in relevant plugin directories (some plugins use kirbyup)
 
 ## Test Commands
-- Run all tests: `./vendor/bin/kirby test` (if available) or check individual plugin test directories
-- Run single test file: `php [path/to/test/file.php]`
-- Run specific test: Use phpunit with filter option if installed separately
+- Run all tests: `vendor/bin/phpunit` (runs all tests in site/plugins/*/tests directories)
+- Run single test file: `vendor/bin/phpunit path/to/test/file.php`
+- Run specific test: `vendor/bin/phpunit --filter TestClassName`
 
 ## Lint/Format Commands
-- PHP linting: `composer run lint` or `./vendor/bin/kirby lint`
-- YAML linting: `./vendor/bin/yaml-lint`
+- PHP linting: Use PHPStan or Psalm for static analysis (not yet configured)
+- YAML linting: `vendor/bin/yaml-lint`
+- General code style: Follow PSR-12 coding standards
 
 ## Code Style Guidelines
 
@@ -73,4 +74,12 @@
 - Keep documentation up-to-date with code changes
 - Include both technical and user-facing documentation
 
-Include the Cursor rules from .cursor/rules/baukasten-kirby.mdc as project-specific context for AI agents.
+## Cursor Rules
+The project includes specific Cursor rules in .cursor/rules/baukasten-kirby.mdc that define:
+- Project structure and integration points
+- Block creation standards for the Baukasten system
+- Plugin functionality descriptions
+- Development workflow guidelines
+- Best practices for headless Kirby implementations
+
+These rules should be referenced when working on any Kirby-related functionality.
