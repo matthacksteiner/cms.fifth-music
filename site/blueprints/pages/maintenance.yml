@@ -15,7 +15,7 @@ tabs:
     fields:
       maintenanceToggle:
         type: toggle
-        label: Wartung
+        label: Wartungsmodus aktivieren
         default: false
       layout:
         extends: fields/layout
