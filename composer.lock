@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "646aef0448b149f59d518af560c07429",
+    "content-hash": "f51e1995459ccd9643498dd62437e74e",
     "packages": [
         {
             "name": "bnomei/kirby3-dotenv",
@@ -347,80 +347,17 @@
             "time": "2024-09-19T14:15:21+00:00"
         },
         {
-            "name": "fabianmichael/kirby-meta",
-            "version": "1.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/fabianmichael/kirby-meta.git",
-                "reference": "be187e7c689473cfb2b03332c3b769ed1b3ae300"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/fabianmichael/kirby-meta/zipball/be187e7c689473cfb2b03332c3b769ed1b3ae300",
-                "reference": "be187e7c689473cfb2b03332c3b769ed1b3ae300",
-                "shasum": ""
-            },
-            "require": {
-                "getkirby/composer-installer": "^1.2",
-                "php": ">=8.0.0"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.8"
-            },
-            "type": "kirby-plugin",
-            "extra": {
-                "installer-name": "meta"
-            },
-            "autoload": {
-                "psr-4": {
-                    "FabianMichael\\Meta\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabian Michael",
-                    "email": "hallo@fabianmichael.de"
-                }
-            ],
-            "description": "Your all-in-one powerhouse for any SEO and metadata needs imaginable.",
-            "homepage": "https://github.com/fabianmichael/kirby-meta",
-            "keywords": [
-                "kirby3",
-                "kirby3-cms",
-                "kirby3-plugin",
-                "meta",
-                "metadata",
-                "panel",
-                "seo"
-            ],
-            "support": {
-                "issues": "https://github.com/fabianmichael/kirby-meta/issues",
-                "source": "https://github.com/fabianmichael/kirby-meta/tree/1.0.2"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/fabianmichael",
-                    "type": "github"
-                }
-            ],
-            "time": "2024-01-19T12:53:45+00:00"
-        },
-        {
             "name": "filp/whoops",
-            "version": "2.18.0",
+            "version": "2.18.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "a7de6c3c6c3c022f5cfc337f8ede6a14460cf77e"
+                "reference": "d2102955e48b9fd9ab24280a7ad12ed552752c4d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/a7de6c3c6c3c022f5cfc337f8ede6a14460cf77e",
-                "reference": "a7de6c3c6c3c022f5cfc337f8ede6a14460cf77e",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/d2102955e48b9fd9ab24280a7ad12ed552752c4d",
+                "reference": "d2102955e48b9fd9ab24280a7ad12ed552752c4d",
                 "shasum": ""
             },
             "require": {
@@ -470,7 +407,7 @@
             ],
             "support": {
                 "issues": "https://github.com/filp/whoops/issues",
-                "source": "https://github.com/filp/whoops/tree/2.18.0"
+                "source": "https://github.com/filp/whoops/tree/2.18.4"
             },
             "funding": [
                 {
@@ -478,7 +415,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-03-15T12:00:00+00:00"
+            "time": "2025-08-08T12:00:00+00:00"
         },
         {
             "name": "getkirby/cli",
@@ -548,16 +485,16 @@
         },
         {
             "name": "getkirby/cms",
-            "version": "4.8.0",
+            "version": "5.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getkirby/kirby.git",
-                "reference": "5292c17832dd34b0e5f3e98dea837a357ef037b6"
+                "reference": "c9708e5c648fbc3ee381114ceae8876d4ca4f9a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getkirby/kirby/zipball/5292c17832dd34b0e5f3e98dea837a357ef037b6",
-                "reference": "5292c17832dd34b0e5f3e98dea837a357ef037b6",
+                "url": "https://api.github.com/repos/getkirby/kirby/zipball/c9708e5c648fbc3ee381114ceae8876d4ca4f9a1",
+                "reference": "c9708e5c648fbc3ee381114ceae8876d4ca4f9a1",
                 "shasum": ""
             },
             "require": {
@@ -575,15 +512,15 @@
                 "ext-mbstring": "*",
                 "ext-openssl": "*",
                 "ext-simplexml": "*",
-                "filp/whoops": "2.18.0",
+                "filp/whoops": "2.18.4",
                 "getkirby/composer-installer": "^1.2.1",
                 "laminas/laminas-escaper": "2.17.0",
                 "michelf/php-smartypants": "1.8.1",
-                "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0",
+                "php": "~8.2.0 || ~8.3.0 || ~8.4.0",
                 "phpmailer/phpmailer": "6.10.0",
                 "symfony/polyfill-intl-idn": "1.32.0",
                 "symfony/polyfill-mbstring": "1.32.0",
-                "symfony/yaml": "6.4.21"
+                "symfony/yaml": "7.3.2"
             },
             "replace": {
                 "symfony/polyfill-php72": "*"
@@ -595,6 +532,7 @@
                 "ext-fileinfo": "Improved mime type detection for files",
                 "ext-intl": "Improved i18n number formatting",
                 "ext-memcached": "Support for the Memcached cache driver",
+                "ext-redis": "Support for the Redis cache driver",
                 "ext-sodium": "Support for the crypto class and more robust session handling",
                 "ext-zip": "Support for ZIP archive file functions",
                 "ext-zlib": "Sanitization and validation for svgz files"
@@ -647,7 +585,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2025-06-03T09:52:03+00:00"
+            "time": "2025-08-19T07:39:58+00:00"
         },
         {
             "name": "getkirby/composer-installer",
@@ -1325,6 +1263,40 @@
                 "source": "https://github.com/thephpleague/color-extractor/tree/0.4.0"
             },
             "time": "2022-09-24T15:57:16+00:00"
+        },
+        {
+            "name": "medienbaecker/kirby-alter",
+            "version": "1.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/medienbaecker/kirby-alter.git",
+                "reference": "a963ea92d11f1957726fd3a42a4dd9c7142c0a65"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/medienbaecker/kirby-alter/zipball/a963ea92d11f1957726fd3a42a4dd9c7142c0a65",
+                "reference": "a963ea92d11f1957726fd3a42a4dd9c7142c0a65",
+                "shasum": ""
+            },
+            "require": {
+                "getkirby/composer-installer": "^1.1"
+            },
+            "type": "kirby-plugin",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Thomas Günther",
+                    "email": "mail@medienbaecker.com"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/medienbaecker/kirby-alter/issues",
+                "source": "https://github.com/medienbaecker/kirby-alter/tree/1.7.0"
+            },
+            "time": "2025-09-03T19:13:11+00:00"
         },
         {
             "name": "michelf/php-smartypants",
@@ -2532,28 +2504,28 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v6.4.21",
+            "version": "v7.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "f01987f45676778b474468aa266fe2eda1f2bc7e"
+                "reference": "b8d7d868da9eb0919e99c8830431ea087d6aae30"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/f01987f45676778b474468aa266fe2eda1f2bc7e",
-                "reference": "f01987f45676778b474468aa266fe2eda1f2bc7e",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/b8d7d868da9eb0919e99c8830431ea087d6aae30",
+                "reference": "b8d7d868da9eb0919e99c8830431ea087d6aae30",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.1",
-                "symfony/deprecation-contracts": "^2.5|^3",
+                "php": ">=8.2",
+                "symfony/deprecation-contracts": "^2.5|^3.0",
                 "symfony/polyfill-ctype": "^1.8"
             },
             "conflict": {
-                "symfony/console": "<5.4"
+                "symfony/console": "<6.4"
             },
             "require-dev": {
-                "symfony/console": "^5.4|^6.0|^7.0"
+                "symfony/console": "^6.4|^7.0"
             },
             "bin": [
                 "Resources/bin/yaml-lint"
@@ -2584,7 +2556,7 @@
             "description": "Loads and dumps YAML files",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/yaml/tree/v6.4.21"
+                "source": "https://github.com/symfony/yaml/tree/v7.3.2"
             },
             "funding": [
                 {
@@ -2596,11 +2568,15 @@
                     "type": "github"
                 },
                 {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
                     "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-04-04T09:48:44+00:00"
+            "time": "2025-07-10T08:47:49+00:00"
         },
         {
             "name": "tobimori/kirby-thumbhash",

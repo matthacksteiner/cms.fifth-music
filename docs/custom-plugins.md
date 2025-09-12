@@ -81,8 +81,9 @@ function baukastenKirbyRoutes()
 
 - Multi-language sitemap support
 - Automatic page discovery
-- SEO-optimized XML output
+- SEO-optimized XML output with trailing slashes for frontend compatibility
 - Integration with search engines
+- Automatic URL formatting to match frontend `trailingSlash: 'always'` configuration
 
 ## Panel Enhancement Plugins
 
@@ -217,9 +218,10 @@ function baukastenKirbyRoutes()
 
 **Features**:
 
-- SEO metadata management
-- Social media meta tags
+- SEO metadata management with trailing slash canonical URLs
+- Social media meta tags with proper URL formatting
 - Structured data support
+- Automatic frontend URL generation for headless CMS integration
 
 ## Plugin Development Patterns
 

@@ -116,11 +116,13 @@ Provides a list of all published pages for sitemap generation and navigation.
 
 **Key Data Includes**:
 
-- Page URI for routing
+- Page URI for routing (without trailing slashes; frontend adds them automatically)
 - Page title and summary
 - Template information
 - Modification dates
 - Publication status
+
+**Note**: URIs from the CMS don't include trailing slashes, but the Astro frontend automatically adds them due to `trailingSlash: 'always'` configuration.
 
 ### Individual Page Data (`/{slug}.json`)
 

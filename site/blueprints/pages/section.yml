@@ -1,6 +1,11 @@
 title: Sektion
 icon: box
 
+buttons:
+  - languages
+  - frontend-preview
+  - frontend-open
+
 tabs:
   content:
     label: Inhalt

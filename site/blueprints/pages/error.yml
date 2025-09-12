@@ -1,6 +1,11 @@
 title: Fehler
 icon: alert
 
+buttons:
+  - languages
+  - frontend-preview
+  - frontend-open
+
 options:
   url: false
   status: false

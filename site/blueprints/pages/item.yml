@@ -1,6 +1,11 @@
 title: Sektions Eintrag
 icon: add
 
+buttons:
+  - languages
+  - frontend-preview
+  - frontend-open
+
 tabs:
   content:
     label: Inhalt

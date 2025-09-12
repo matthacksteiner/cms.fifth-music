@@ -1,6 +1,11 @@
 title: Standard
 icon: paragraph
 
+buttons:
+  - languages
+  - frontend-preview
+  - frontend-open
+
 status:
   draft:
     label: Entwurf
