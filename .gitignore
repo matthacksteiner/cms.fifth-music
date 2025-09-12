@@ -37,3 +37,5 @@ site/plugins/*
 !site/plugins/baukasten-grid-blocks/
 !site/plugins/baukasten-cache-manager/
 !site/plugins/baukasten-api/
+!site/plugins/meta/
+!site/plugins/baukasten-meta/

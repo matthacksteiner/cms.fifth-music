@@ -7,7 +7,8 @@
 */
 
 return [
-	// 'debug' => true,
+	'debug' => true,
+	'panel.dev' => true, // Enable panel development mode for plugin changes
 	'auth' => [
 		'methods' => ['password', 'password-reset']
 	],
@@ -19,10 +20,90 @@ return [
 	'panel' => [
 		'css'     => 'assets/css/baukasten-panel.css',
 		'favicon' => 'assets/img/baukasten-favicon.ico',
+		'viewButtons' => [
+			'site' => [
+				'frontend-open' => function () {
+					$frontendUrl = rtrim(site()->frontendUrl()->toString(), '/');
+
+					return [
+						'icon' => 'window',
+						'text' => 'Öffnen',
+						'link' => $frontendUrl,
+						'target' => '_blank'
+					];
+				},
+				'frontend-preview' => function () {
+					$frontendUrl = rtrim(site()->frontendUrl()->toString(), '/');
+					$previewUrl = $frontendUrl . '/preview/';
+
+					return [
+						'icon' => 'open',
+						'text' => 'Vorschau',
+						'link' => $previewUrl,
+						'target' => '_blank'
+					];
+				}
+			],
+			'page' => [
+				'frontend-open' => function (Kirby\Cms\Page $page) {
+					$frontendUrl = rtrim(site()->frontendUrl()->toString(), '/');
+
+					// Special case for home page - link to root
+					if ($page->template()->name() === 'home') {
+						$pageUrl = $frontendUrl;
+					} else {
+						$pageUri = $page->uri();
+						$pageUrl = $frontendUrl;
+						if (!empty($pageUri)) {
+							$pageUrl .= '/' . $pageUri;
+						}
+					}
+
+					return [
+						'icon' => 'window',
+						'text' => 'Öffnen',
+						'link' => $pageUrl,
+						'target' => '_blank'
+					];
+				},
+				'frontend-preview' => function (Kirby\Cms\Page $page) {
+					$frontendUrl = rtrim(site()->frontendUrl()->toString(), '/');
+
+					// Special case for home page - link to preview root
+					if ($page->template()->name() === 'home') {
+						$previewUrl = $frontendUrl . '/preview/';
+					} else {
+						$pageUri = $page->uri();
+						$previewUrl = $frontendUrl . '/preview';
+						if (!empty($pageUri)) {
+							$previewUrl .= '/' . $pageUri;
+						}
+					}
+
+					return [
+						'icon' => 'open',
+						'text' => 'Vorschau',
+						'link' => $previewUrl,
+						'target' => '_blank'
+					];
+				}
+			]
+		]
 	],
 	'thumbs' => [
 		'quality' => 99,
 		'format'  => 'webp',
+	],
+	'routes' => [
+		[
+			'pattern' => 'sitemap.xml',
+			'action' => function () {
+				$sitemap = BaukastenMeta\Meta\Sitemap::factory();
+				$xml = $sitemap->generate();
+
+				return new Kirby\Cms\Response($xml, 'application/xml');
+			}
+		]
 	],
 	'ready' => function () {
 		return [

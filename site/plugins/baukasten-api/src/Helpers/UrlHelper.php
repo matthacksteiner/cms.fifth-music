@@ -43,11 +43,17 @@ class UrlHelper
         while ($current && !$current->isHomePage()) {
             // Only add non-section pages to the URI segments
             if ($current->intendedTemplate()->name() !== 'section') {
-                array_unshift($segments, $current->slug());
+                $slug = $current->slug();
+
+
+                array_unshift($segments, $slug);
             }
             $current = $current->parent();
         }
 
-        return implode('/', $segments);
+        $result = implode('/', $segments);
+
+
+        return $result;
     }
 }

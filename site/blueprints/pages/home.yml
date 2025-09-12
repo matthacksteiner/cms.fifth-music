@@ -1,6 +1,11 @@
 title: Start
 icon: home
 
+buttons:
+  - languages
+  - frontend-preview
+  - frontend-open
+
 options:
   delete: false
   status: false

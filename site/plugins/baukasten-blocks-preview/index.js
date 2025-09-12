@@ -76,7 +76,7 @@ panel.plugin("baukasten-blocks-preview/preview", {
 		accordion: {
 			computed: {
 				items() {
-					return this.content.acc || { marks: true };
+					return this.content.acc || [];
 				},
 			},
 			methods: {
@@ -93,7 +93,7 @@ panel.plugin("baukasten-blocks-preview/preview", {
 				<div v-if="items.length">
 				  <details v-for="(item, index) in items" :key="index">
 					<summary>
-					  <k-writer
+					  <k-writer-input
 						ref="title"
 						:inline="true"
 						:marks="false"
@@ -101,7 +101,7 @@ panel.plugin("baukasten-blocks-preview/preview", {
 						@input="updateItem(content, index, 'title', $event)"
 					  />
 					</summary>
-					<k-writer
+					<k-writer-input
 					  class="label"
 					  ref="text"
 					  :nodes="true"
@@ -118,7 +118,7 @@ panel.plugin("baukasten-blocks-preview/preview", {
 		quoteSlider: {
 			computed: {
 				items() {
-					return this.content.acc || { marks: true };
+					return this.content.acc || [];
 				},
 			},
 			methods: {
@@ -134,7 +134,7 @@ panel.plugin("baukasten-blocks-preview/preview", {
 				<div>
 					<div v-if="items.length">
 						<div v-for="(item, index) in items" :key="index" class="quote-item">
-							<k-writer
+							<k-writer-input
 								class="label"
 								ref="text"
 								:nodes="false"
@@ -142,7 +142,7 @@ panel.plugin("baukasten-blocks-preview/preview", {
 								:value="item.text"
 								@input="updateItem(content, index, 'text', $event)"
 							/>
-							<k-writer
+							<k-writer-input
 								ref="author"
 								:inline="true"
 								:marks="false"
@@ -194,7 +194,7 @@ panel.plugin("baukasten-blocks-preview/preview", {
 		iconlist: {
 			computed: {
 				items() {
-					return this.content.list || { marks: true };
+					return this.content.list || [];
 				},
 			},
 			methods: {
@@ -211,7 +211,7 @@ panel.plugin("baukasten-blocks-preview/preview", {
 				<div v-if="items.length">
 				  <details v-for="(item, index) in items" :key="index">
 					<summary>
-					  <k-writer
+					  <k-writer-input
 						ref="text"
 						:inline="true"
 						:nodes="false"
@@ -220,6 +220,9 @@ panel.plugin("baukasten-blocks-preview/preview", {
 						@input="updateItem(content, index, 'text', $event)"
 					  />
 					</summary>
+					<div v-if="item.description" style="margin-top: 0.5rem; color: #666; font-size: 0.9rem;">
+						{{ item.description }}
+					</div>
 				  </details>
 				</div>
 				<div v-else>Noch keine Icon Liste Elemente vorhanden.</div>

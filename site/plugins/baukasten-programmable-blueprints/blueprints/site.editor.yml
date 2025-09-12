@@ -1,5 +1,11 @@
 title: Site
 
+buttons:
+  - deploy-trigger
+  - languages
+  - frontend-preview
+  - frontend-open
+
 tabs:
   pages:
     label: Dashboard
