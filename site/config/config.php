@@ -23,7 +23,7 @@ return [
 		'viewButtons' => [
 			'site' => [
 				'frontend-open' => function () {
-					$frontendUrl = rtrim(site()->frontendUrl()->toString(), '/');
+					$frontendUrl = rtrim(site()->frontendUrl()->toString(), '/') . '/';
 
 					return [
 						'icon' => 'window',
@@ -49,13 +49,15 @@ return [
 					$frontendUrl = rtrim(site()->frontendUrl()->toString(), '/');
 
 					// Special case for home page - link to root
-					if ($page->template()->name() === 'home') {
-						$pageUrl = $frontendUrl;
+					if ($page->isHomePage() || $page->template()->name() === 'home' || $page->uri() === 'home') {
+						$pageUrl = $frontendUrl . '/';
 					} else {
 						$pageUri = $page->uri();
 						$pageUrl = $frontendUrl;
 						if (!empty($pageUri)) {
-							$pageUrl .= '/' . $pageUri;
+							$pageUrl .= '/' . $pageUri . '/';
+						} else {
+							$pageUrl .= '/';
 						}
 					}
 
@@ -70,13 +72,15 @@ return [
 					$frontendUrl = rtrim(site()->frontendUrl()->toString(), '/');
 
 					// Special case for home page - link to preview root
-					if ($page->template()->name() === 'home') {
+					if ($page->isHomePage() || $page->template()->name() === 'home' || $page->uri() === 'home') {
 						$previewUrl = $frontendUrl . '/preview/';
 					} else {
 						$pageUri = $page->uri();
 						$previewUrl = $frontendUrl . '/preview';
 						if (!empty($pageUri)) {
-							$previewUrl .= '/' . $pageUri;
+							$previewUrl .= '/' . $pageUri . '/';
+						} else {
+							$previewUrl .= '/';
 						}
 					}
 
