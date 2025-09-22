@@ -3,7 +3,7 @@ _MACOSX
 __MACOSX
 .idea
 .run
-.vscode/sftp.json
+.vscode/
 .env
 .ddev/*
 
