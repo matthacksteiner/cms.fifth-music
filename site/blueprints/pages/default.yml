@@ -2,6 +2,7 @@ title: Standard
 icon: paragraph
 
 buttons:
+  - status
   - languages
   - frontend-preview
   - frontend-open

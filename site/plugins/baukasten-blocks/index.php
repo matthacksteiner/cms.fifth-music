@@ -1,6 +1,7 @@
 <?php
 
 use Kirby\Cms\App as Kirby;
+use Kirby\Toolkit\Str;
 
 Kirby::plugin('baukasten-blocks/baukasten-blocks', [
     'options'       => [],
@@ -11,6 +12,58 @@ Kirby::plugin('baukasten-blocks/baukasten-blocks', [
     'blueprints'    => [],
     'translations'  => [],
 ]);
+
+function resolveKirbyTagsInHtml($html)
+{
+    if (empty($html)) {
+        return '';
+    }
+
+    return preg_replace_callback(
+        '/(<a[^>]+href=")([^"]+)(")/',
+        function ($matches) {
+            $href = $matches[2];
+
+            if (Str::startsWith($href, '/@/page/')) {
+                $uuid = 'page://' . substr($href, 8);
+                if ($page = page($uuid)) {
+                    $kirby = kirby();
+                    $currentLanguage = $kirby->language();
+                    $defaultLanguage = $kirby->defaultLanguage();
+                    $isDefaultLanguage = $currentLanguage->code() === $defaultLanguage->code();
+                    $prefixDefault = $kirby->option('prefixDefaultLocale', false);
+
+                    $urlParts = [];
+
+                    if (!$isDefaultLanguage || ($isDefaultLanguage && $prefixDefault)) {
+                        $urlParts[] = $currentLanguage->code();
+                    }
+
+                    if (!$page->isHomePage()) {
+                        $urlParts[] = $page->uri();
+                    }
+
+                    $resolvedUrl = '/' . implode('/', $urlParts);
+                    if ($resolvedUrl !== '/' || !empty($urlParts)) {
+                        $resolvedUrl .= '/';
+                    }
+
+                    return $matches[1] . $resolvedUrl . $matches[3];
+                }
+            }
+
+            if (Str::startsWith($href, '/@/file/')) {
+                $uuid = 'file://' . substr($href, 8);
+                if ($file = kirby()->file($uuid)) {
+                    return $matches[1] . $file->url() . $matches[3];
+                }
+            }
+
+            return $matches[0]; // Return original match if not a Kirby page/file link
+        },
+        $html
+    );
+}
 
 /**
  * Process a collection of blocks and return an array
@@ -237,7 +290,7 @@ function getBlockArray(\Kirby\Cms\Block $block)
             break;
 
         case 'text':
-            $blockArray['content']['text'] = (string)$block->text();
+            $blockArray['content']['text'] = resolveKirbyTagsInHtml((string)$block->text());
             break;
 
         case "iconlist":

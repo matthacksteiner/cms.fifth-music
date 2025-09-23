@@ -60,8 +60,8 @@ tabs:
             create: false
             templates:
               - home
-          contentMainError:
-            headline: Error Seite
+          contentMainSpecial:
+            headline: Spezialseiten
             type: pages
             layout: list
             status: unlisted
@@ -72,3 +72,4 @@ tabs:
               Konfiguration über die deutschen Seite.
             templates:
               - error
+              - maintenance

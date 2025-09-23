@@ -90,8 +90,8 @@ Defines PHP dependencies and autoloading configuration:
 ```json
 {
 	"require": {
-		"getkirby/cms": "^4.0",
-		"bnomei/kirby3-dotenv": "^3.0"
+		"getkirby/cms": "^5.0",
+		"bnomei/kirby-dotenv": "^4.0"
 	}
 }
 ```
