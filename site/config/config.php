@@ -98,6 +98,12 @@ return [
 		'quality' => 99,
 		'format'  => 'webp',
 	],
+	'cache' => [
+		'pages' => [
+			'active' => true,
+			'type'   => 'file'
+		]
+	],
 	'routes' => [
 		[
 			'pattern' => 'sitemap.xml',

@@ -2,6 +2,7 @@ title: Sektions Eintrag
 icon: add
 
 buttons:
+  - status
   - languages
   - frontend-preview
   - frontend-open

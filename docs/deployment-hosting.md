@@ -6,7 +6,7 @@ The Baukasten-CMS is designed to work as a headless CMS backend that integrates 
 
 ### Server Requirements
 
-- **PHP**: 8.2+ (PHP 7.4 is not supported)
+- **PHP**: 8.2+
 - **Web Server**: Apache 2 or Nginx with URL rewriting enabled
 - **SSL Certificate**: Required for secure API communication
 - **File Permissions**: Write access to `storage/` and `public/media/` directories

@@ -202,7 +202,7 @@ function baukastenKirbyRoutes()
 
 ## Development and Maintenance
 
-### `kirby3-janitor`
+### `janitor`
 
 **Purpose**: Maintenance tools and cleanup utilities.
 
