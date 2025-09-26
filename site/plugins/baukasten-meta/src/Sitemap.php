@@ -70,46 +70,85 @@ class Sitemap
             return;
         }
 
-        $url = $doc->createElement('url');
-        $url->appendChild($doc->createElement('loc', $page->url()));
-
-        if ($this->kirby->option('baukastenMeta.meta.sitemap.detailSettings') !== false) {
-            $priority = $meta->priority();
-
-            if ($priority !== null) { // could be 0.0, so has to be checked against NULL
-                $url->appendChild($doc->createElement('priority', number_format($priority, 1, '.', '')));
-            }
-
-            if ($changefreq = $meta->changefreq()) {
-                $url->appendChild($doc->createElement('changefreq', $changefreq));
-            }
-        }
-
-        if ($this->isMultilang && $this->languages->count() > 1) {
-            // only generate links to translations, if is are more
-            // than one language defined
+        // Emit one <url> entry per language (including alternates)
+        if ($this->isMultilang && $this->languages->count() > 0) {
             foreach ($this->languages as $language) {
-                $linkEl = $doc->createElement('xhtml:link');
-                $linkEl->setAttribute('rel', 'alternate');
-                $linkEl->setAttribute('hreflang', $code = $language->code());
-                $linkEl->setAttribute('href', $page->url($code));
-                $url->appendChild($linkEl);
+                $code = $language->code();
+
+                $url = $doc->createElement('url');
+                $url->appendChild($doc->createElement('loc', $page->url($code)));
+
+                if ($this->kirby->option('baukastenMeta.meta.sitemap.detailSettings') !== false) {
+                    $priority = $meta->priority();
+                    if ($priority !== null) {
+                        $url->appendChild($doc->createElement('priority', number_format($priority, 1, '.', '')));
+                    }
+                    if ($changefreq = $meta->changefreq()) {
+                        $url->appendChild($doc->createElement('changefreq', $changefreq));
+                    }
+                }
+
+                // Add xhtml:link alternates for all languages + x-default
+                if ($this->languages->count() > 1) {
+                    foreach ($this->languages as $altLanguage) {
+                        $altLink = $doc->createElement('xhtml:link');
+                        $altLink->setAttribute('rel', 'alternate');
+                        $altLink->setAttribute('hreflang', $altLanguage->code());
+                        $altLink->setAttribute('href', $page->url($altLanguage->code()));
+                        $url->appendChild($altLink);
+                    }
+
+                    // x-default should point to the default language URL (hook will normalize)
+                    $defaultLanguage = $this->kirby->defaultLanguage();
+                    $xDefault = $doc->createElement('xhtml:link');
+                    $xDefault->setAttribute('rel', 'alternate');
+                    $xDefault->setAttribute('hreflang', 'x-default');
+                    $xDefault->setAttribute('href', $page->url($defaultLanguage->code()));
+                    $url->appendChild($xDefault);
+                }
+
+                // Add lastmod
+                $url->appendChild($doc->createElement('lastmod', date('Y-m-d', $meta->lastmod())));
+
+                // Hook to allow filtering
+                if ($this->kirby->apply('meta.sitemap.url', [
+                    'kirby' => $this->kirby,
+                    'page' => $page,
+                    'meta' => $meta,
+                    'doc' => $doc,
+                    'url' => $url,
+                    'include' => true,
+                ], 'include') !== false) {
+                    $root->appendChild($url);
+                }
             }
-        }
+        } else {
+            // Single-language site: keep previous behavior
+            $url = $doc->createElement('url');
+            $url->appendChild($doc->createElement('loc', $page->url()));
 
-        // Add lastmod date either from metadata or from modified date of page
-        $url->appendChild($doc->createElement('lastmod', date('Y-m-d', $meta->lastmod())));
+            if ($this->kirby->option('baukastenMeta.meta.sitemap.detailSettings') !== false) {
+                $priority = $meta->priority();
+                if ($priority !== null) {
+                    $url->appendChild($doc->createElement('priority', number_format($priority, 1, '.', '')));
+                }
+                if ($changefreq = $meta->changefreq()) {
+                    $url->appendChild($doc->createElement('changefreq', $changefreq));
+                }
+            }
 
-        // Allow hook to alter the DOM
-        if ($this->kirby->apply('meta.sitemap.url', [
-            'kirby' => $this->kirby,
-            'page' => $page,
-            'meta' => $meta,
-            'doc' => $doc,
-            'url' => $url,
-            'include' => true,
-        ], 'include') !== false) {
-            $root->appendChild($url);
+            $url->appendChild($doc->createElement('lastmod', date('Y-m-d', $meta->lastmod())));
+
+            if ($this->kirby->apply('meta.sitemap.url', [
+                'kirby' => $this->kirby,
+                'page' => $page,
+                'meta' => $meta,
+                'doc' => $doc,
+                'url' => $url,
+                'include' => true,
+            ], 'include') !== false) {
+                $root->appendChild($url);
+            }
         }
     }
 
