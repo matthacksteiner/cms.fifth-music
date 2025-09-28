@@ -67,13 +67,33 @@ class PageMeta
             // Transform CMS URL to frontend URL
             $transformedUrl = str_replace($cmsUrl, $frontendUrl, $pageUrl);
 
+            // Fix missing slash between domain and path
+            if (strpos($transformedUrl, $frontendUrl) === 0 && strlen($transformedUrl) > strlen($frontendUrl)) {
+                $pathPart = substr($transformedUrl, strlen($frontendUrl));
+                if (!empty($pathPart) && $pathPart[0] !== '/') {
+                    $transformedUrl = $frontendUrl . '/' . $pathPart;
+                }
+            }
+
             // Handle language prefix removal for default language if needed
             $allLanguages = $this->kirby->languages();
             $defaultLanguage = $this->kirby->defaultLanguage();
 
             if (count($allLanguages) === 1 || (option('prefixDefaultLocale') === false)) {
-                $langPrefix = '/' . $defaultLanguage->code() . '/';
-                $transformedUrl = str_replace($langPrefix, '/', $transformedUrl);
+                $defaultCode = $defaultLanguage->code();
+
+                // Handle both patterns: /de/ and /de (for home page)
+                $langPrefixWithSlash = '/' . $defaultCode . '/';
+                $langPrefixWithoutSlash = '/' . $defaultCode;
+
+                // First try to replace /de/ pattern
+                if (strpos($transformedUrl, $langPrefixWithSlash) !== false) {
+                    $transformedUrl = str_replace($langPrefixWithSlash, '/', $transformedUrl);
+                }
+                // Then try to replace /de pattern (for home page) - check if URL ends with /de
+                elseif (substr($transformedUrl, -strlen($langPrefixWithoutSlash)) === $langPrefixWithoutSlash) {
+                    $transformedUrl = substr($transformedUrl, 0, -strlen($langPrefixWithoutSlash));
+                }
             }
 
             // Ensure trailing slash for consistency with frontend trailingSlash: 'always'
