@@ -19,7 +19,10 @@ if (!function_exists('getMeta')) {
         ];
 
         foreach ($pageMeta->social() as $tag) {
-            $json["social"][$tag["property"]] = $tag["content"];
+            $key = $tag['property'] ?? ($tag['name'] ?? null);
+            if ($key) {
+                $json['social'][$key] = $tag['content'];
+            }
         }
 
         if ($owner === 'org') {
