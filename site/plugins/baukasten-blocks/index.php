@@ -398,11 +398,13 @@ function getBlockArray(\Kirby\Cms\Block $block)
                     'label' => $fieldsObject->firstname()->toObject()->label()->value(),
                     'placeholder' => $fieldsObject->firstname()->toObject()->placeholder()->value(),
                     'help' => $fieldsObject->firstname()->toObject()->help()->value(),
+                    'required' => $fieldsObject->firstname()->toObject()->required()->toBool(false),
                 ],
                 'lastname' => [
                     'label' => $fieldsObject->lastname()->toObject()->label()->value(),
                     'placeholder' => $fieldsObject->lastname()->toObject()->placeholder()->value(),
                     'help' => $fieldsObject->lastname()->toObject()->help()->value(),
+                    'required' => $fieldsObject->lastname()->toObject()->required()->toBool(false),
                 ],
                 'email' => [
                     'label' => $fieldsObject->email()->toObject()->label()->value(),
@@ -414,6 +416,7 @@ function getBlockArray(\Kirby\Cms\Block $block)
                     'placeholder' => $fieldsObject->message()->toObject()->placeholder()->value(),
                     'rows' => $fieldsObject->message()->toObject()->rows()->toInt() ?: 5,
                     'help' => $fieldsObject->message()->toObject()->help()->value(),
+                    'required' => $fieldsObject->message()->toObject()->required()->toBool(false),
                 ],
                 'submitButton' => [
                     'placeholder' => $fieldsObject->submitButton()->toObject()->placeholder()->value(),
