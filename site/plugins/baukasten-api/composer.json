@@ -1,6 +1,6 @@
 {
-	"name": "baukasten/field-methods",
-	"description": "A field methods plugin for the Baukasten Kirby CMS that extends field functionality with custom methods for link processing and data manipulation.",
+	"name": "baukasten/api",
+	"description": "A comprehensive API plugin for the Baukasten Kirby CMS that provides structured API endpoints, helper functions, and routing logic for headless CMS functionality.",
 	"type": "kirby-plugin",
 	"license": "MIT",
 	"version": "1.0.0",
@@ -15,7 +15,7 @@
 		"getkirby/cms": "^3.7"
 	},
 	"extra": {
-		"installer-name": "baukasten-field-methods"
+		"installer-name": "baukasten-api"
 	},
 	"config": {
 		"optimize-autoloader": true
@@ -23,10 +23,10 @@
 	"keywords": [
 		"kirby",
 		"cms",
-		"fields",
-		"methods",
+		"api",
+		"headless",
 		"baukasten",
-		"links",
-		"processing"
+		"routes",
+		"helpers"
 	]
 }
