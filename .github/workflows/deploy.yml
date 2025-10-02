@@ -60,5 +60,4 @@ jobs:
             rm -rf kirby
             composer install --no-interaction --prefer-dist --optimize-autoloader
             # Clear Kirby cache after deployment
-            rm -rf storage/cache/*
-            rm -rf storage/sessions/*
+            bash -c 'rm -rf storage/cache/* storage/sessions/*'
