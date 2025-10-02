@@ -50,9 +50,15 @@ tabs:
             label: Vorname Feld
             width: 1/2
             fields:
+              required:
+                label: Pflichtfeld?
+                type: toggle
+                default: false
+                width: 1/6
               label:
                 label: Label
                 type: text
+                width: 5/6
               placeholder:
                 label: Platzhalter
                 type: text
@@ -64,9 +70,15 @@ tabs:
             label: Nachname Feld
             width: 1/2
             fields:
+              required:
+                label: Pflichtfeld?
+                type: toggle
+                default: false
+                width: 1/6
               label:
                 label: Label
                 type: text
+                width: 5/6
               placeholder:
                 label: Platzhalter
                 type: text
@@ -93,9 +105,15 @@ tabs:
             label: Nachricht Feld
             width: 1/2
             fields:
+              required:
+                label: Pflichtfeld?
+                type: toggle
+                default: false
+                width: 1/6
               label:
                 label: Label
                 type: text
+                width: 5/6
               placeholder:
                 label: Platzhalter
                 type: text
