@@ -1,0 +1,79 @@
+name: Deploy to Hetzner VPS
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create target directory on server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DEPLOYMENT_HOST }}
+          username: ${{ secrets.DEPLOYMENT_USER }}
+          key: ${{ secrets.DEPLOY_KEY_PRIVATE }}
+          script: |
+            if [ ! -d "/var/www/${{ secrets.DEPLOYMENT_PATH }}" ]; then
+              sudo /usr/local/bin/add-site ${{ secrets.DEPLOYMENT_PATH }} ${{ secrets.DEPLOYMENT_USER }}
+            fi
+
+      - name: Deploy files via rsync
+        uses: Burnett01/rsync-deployments@6.0.0
+        with:
+          switches: -avzr --delete --exclude="content" --exclude="site/languages" --exclude=".vscode" --exclude=".git" --exclude=".env" --exclude="node_modules" --exclude="public/media" --exclude="vendor" --exclude="kirby" --exclude="storage/cache" --exclude="storage/sessions" --exclude=".DS_Store" --exclude="server-setup" --exclude="docs"
+          remote_path: /var/www/${{ secrets.DEPLOYMENT_PATH }}/
+          remote_host: ${{ secrets.DEPLOYMENT_HOST }}
+          remote_user: ${{ secrets.DEPLOYMENT_USER }}
+          remote_key: ${{ secrets.DEPLOY_KEY_PRIVATE }}
+
+      - name: Create .env file
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DEPLOYMENT_HOST }}
+          username: ${{ secrets.DEPLOYMENT_USER }}
+          key: ${{ secrets.DEPLOY_KEY_PRIVATE }}
+          script: |
+            cd /var/www/${{ secrets.DEPLOYMENT_PATH }}/
+            bash -c 'cat > .env << EOF
+            # Kirby CMS Environment Variables
+            DEPLOY_URL=${{ secrets.DEPLOY_URL }}
+            KIRBY_DEBUG=false
+            KIRBY_CACHE=true
+            EOF'
+
+      - name: Install Composer dependencies
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DEPLOYMENT_HOST }}
+          username: ${{ secrets.DEPLOYMENT_USER }}
+          key: ${{ secrets.DEPLOY_KEY_PRIVATE }}
+          script: |
+            cd /var/www/${{ secrets.DEPLOYMENT_PATH }}/
+            composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
+
+      - name: Set permissions and clear cache
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DEPLOYMENT_HOST }}
+          username: ${{ secrets.DEPLOYMENT_USER }}
+          key: ${{ secrets.DEPLOY_KEY_PRIVATE }}
+          script: |
+            cd /var/www/${{ secrets.DEPLOYMENT_PATH }}/
+            sudo chown -R ${{ secrets.DEPLOYMENT_USER }}:www-data .
+            sudo chmod -R 755 .
+            sudo chmod -R 775 storage public/media site/cache
+            rm -rf storage/cache/* storage/sessions/*
+
+      - name: Reload services
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DEPLOYMENT_HOST }}
+          username: ${{ secrets.DEPLOYMENT_USER }}
+          key: ${{ secrets.DEPLOY_KEY_PRIVATE }}
+          script: |
+            sudo service php8.3-fpm reload
+            sudo service nginx reload

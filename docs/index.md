@@ -13,6 +13,7 @@ This documentation provides comprehensive information about the Baukasten CMS te
 - [Custom Plugins](custom-plugins.md) - Plugin development
 - [Performance and Caching](performance-caching.md) - Optimization strategies
 - [Deployment and Hosting](deployment-hosting.md) - Deployment guidelines
+- [Hetzner VPS Deployment](deployment-hetzner.md) - **Complete automated setup for Hetzner VPS**
 
 ## Quick Block Creation Reference
 

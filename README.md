@@ -141,15 +141,47 @@ DEPLOY_URL=https://api.netlify.com/build_hooks/YOUR_BUILD_HOOK_ID
 
 The CMS supports various hosting environments:
 
+### 🚀 Hetzner VPS (Recommended - New!)
+
+**Automated setup for hosting multiple Kirby CMS instances**
+
+- **One-command setup**: Automated server configuration
+- **Production-ready**: Security best practices built-in
+- **Cost-effective**: Starting at ~€4/month
+- **Multiple sites**: Host unlimited CMS instances on one VPS
+- **Full control**: Root access and dedicated resources
+
+**Quick Start:**
+
+```bash
+# 1. Upload and run setup script on VPS
+scp server-setup/setup-server.sh root@YOUR_SERVER_IP:/tmp/
+ssh root@YOUR_SERVER_IP "bash /tmp/setup-server.sh"
+
+# 2. Deploy your CMS
+./server-setup/deploy-site.sh cms.yourproject.com
+```
+
+**📖 See [Hetzner VPS Deployment Guide](./docs/deployment-hetzner.md) for complete instructions.**
+
+### Other Deployment Options
+
 - **Shared Hosting**: Traditional web hosting with PHP support
-- **VPS/Dedicated Servers**: Full control with custom configuration
 - **Cloud Hosting**: Scalable solutions like Uberspace, DigitalOcean
 - **Docker**: Containerized deployment for consistent environments
 
 ### Automated Deployment (GitHub Actions)
 
-For automated deployment to servers like Uberspace, the project includes GitHub Actions workflows. Configure these secrets in your repository:
+For automated deployment, the project includes GitHub Actions workflows:
 
+**Hetzner VPS** (see `.github/workflows/deploy-hetzner.yml`):
+- `HETZNER_HOST`: Server IP or hostname
+- `HETZNER_USER`: SSH username (default: `deploy`)
+- `DEPLOY_KEY_PRIVATE`: SSH private key
+- `HETZNER_PATH`: Site directory name
+- `DEPLOY_URL`: Netlify build hook URL
+
+**Uberspace** (see `.github/workflows/deploy.yml`):
 - `UBERSPACE_HOST`: Server hostname
 - `UBERSPACE_USER`: Server username
 - `DEPLOY_KEY_PRIVATE`: SSH private key

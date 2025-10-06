@@ -2,6 +2,37 @@
 
 The Baukasten-CMS is designed to work as a headless CMS backend that integrates with the Astro frontend. This document covers deployment strategies, hosting options, and configuration for different environments.
 
+## 🚀 Quick Start: Hetzner VPS (Recommended)
+
+**NEW**: For hosting multiple Kirby CMS instances with full control, we now provide automated setup scripts for Hetzner VPS.
+
+**👉 See [Hetzner VPS Deployment Guide](deployment-hetzner.md) for complete automated setup.**
+
+### Why Hetzner VPS?
+
+- **Cost-Effective**: Starting at ~€4/month
+- **Full Control**: Root access and dedicated resources
+- **Multiple Sites**: Host unlimited CMS instances
+- **Automated Setup**: One-command server configuration
+- **Production-Ready**: Security best practices built-in
+
+### Quick Setup
+
+```bash
+# 1. Upload setup script
+scp server-setup/setup-server.sh root@YOUR_SERVER_IP:/tmp/
+
+# 2. Run automated setup
+ssh root@YOUR_SERVER_IP "bash /tmp/setup-server.sh"
+
+# 3. Deploy your CMS
+./server-setup/deploy-site.sh cms.yourproject.com
+```
+
+**[→ Full Hetzner VPS Setup Guide](deployment-hetzner.md)**
+
+---
+
 ## Hosting Requirements
 
 ### Server Requirements
