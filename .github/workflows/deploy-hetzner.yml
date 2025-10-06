@@ -17,11 +17,7 @@ jobs:
           username: ${{ secrets.DEPLOYMENT_USER }}
           key: ${{ secrets.DEPLOY_KEY_PRIVATE }}
           script: |
-            bash << 'BASH_SCRIPT'
-            if [ ! -d "/var/www/${{ secrets.DEPLOYMENT_PATH }}" ]; then
-              sudo /usr/local/bin/add-site ${{ secrets.DEPLOYMENT_PATH }} ${{ secrets.DEPLOYMENT_USER }}
-            fi
-            BASH_SCRIPT
+            bash -c 'if [ ! -d "/var/www/${{ secrets.DEPLOYMENT_PATH }}" ]; then sudo /usr/local/bin/add-site ${{ secrets.DEPLOYMENT_PATH }} ${{ secrets.DEPLOYMENT_USER }}; fi'
 
       - name: Deploy files via rsync
         uses: Burnett01/rsync-deployments@6.0.0
@@ -39,15 +35,13 @@ jobs:
           username: ${{ secrets.DEPLOYMENT_USER }}
           key: ${{ secrets.DEPLOY_KEY_PRIVATE }}
           script: |
-            bash << 'BASH_SCRIPT'
             cd /var/www/${{ secrets.DEPLOYMENT_PATH }}/
-            cat > .env << 'ENV_EOF'
+            bash -c 'cat > .env << EOF
             # Kirby CMS Environment Variables
             DEPLOY_URL=${{ secrets.DEPLOY_URL }}
             KIRBY_DEBUG=false
             KIRBY_CACHE=true
-            ENV_EOF
-            BASH_SCRIPT
+            EOF'
 
       - name: Install Composer dependencies
         uses: appleboy/ssh-action@v1.0.3
@@ -56,10 +50,8 @@ jobs:
           username: ${{ secrets.DEPLOYMENT_USER }}
           key: ${{ secrets.DEPLOY_KEY_PRIVATE }}
           script: |
-            bash << 'BASH_SCRIPT'
             cd /var/www/${{ secrets.DEPLOYMENT_PATH }}/
             composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
-            BASH_SCRIPT
 
       - name: Set permissions and clear cache
         uses: appleboy/ssh-action@v1.0.3
@@ -68,13 +60,11 @@ jobs:
           username: ${{ secrets.DEPLOYMENT_USER }}
           key: ${{ secrets.DEPLOY_KEY_PRIVATE }}
           script: |
-            bash << 'BASH_SCRIPT'
             cd /var/www/${{ secrets.DEPLOYMENT_PATH }}/
             sudo chown -R ${{ secrets.DEPLOYMENT_USER }}:www-data .
             sudo chmod -R 755 .
             sudo chmod -R 775 storage public/media site/cache
-            rm -rf storage/cache/* storage/sessions/*
-            BASH_SCRIPT
+            bash -c 'rm -rf storage/cache/* storage/sessions/*'
 
       - name: Reload services
         uses: appleboy/ssh-action@v1.0.3
@@ -83,7 +73,5 @@ jobs:
           username: ${{ secrets.DEPLOYMENT_USER }}
           key: ${{ secrets.DEPLOY_KEY_PRIVATE }}
           script: |
-            bash << 'BASH_SCRIPT'
             sudo service php8.3-fpm reload
             sudo service nginx reload
-            BASH_SCRIPT
