@@ -62,4 +62,4 @@ jobs:
           script: |
             cd /var/www/${{ secrets.DEPLOYMENT_PATH }}/
             # Clear Kirby cache after deployment
-            bash -c 'rm -rf storage/cache/* storage/sessions/*'
+            rm -rf storage/cache/* storage/sessions/* 2>/dev/null || true
