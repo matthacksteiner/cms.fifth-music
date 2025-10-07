@@ -182,32 +182,7 @@ echo ""
 
 # Sync Nginx configuration with the working template to ensure best practices
 log_info "Syncing Nginx configuration with template..."
-ssh hetzner-root "
-set -e
-DOMAIN=\"$DOMAIN\"
-TEMPLATE_CONF=\"/etc/nginx/sites-available/cms.baukasten\"
-TARGET_CONF=\"/etc/nginx/sites-available/\$DOMAIN\"
-BAUKASTEN_DOMAIN=\"cms.baukasten.matthiashacksteiner.net\"
-BAUKASTEN_PATH=\"/var/www/cms.baukasten\"
-TARGET_PATH=\"/var/www/\$DOMAIN\"
-
-if [ ! -f \"\$TARGET_CONF\" ]; then
-    echo -e \"${YELLOW}[WARN]${NC} Nginx config for \$DOMAIN not found. Please run 'add-site \$DOMAIN' manually first.\"
-    exit 0
-fi
-
-# Overwrite with template and customize
-cp \"\$TEMPLATE_CONF\" \"\$TARGET_CONF\"
-sed -i \"s/\$BAUKASTEN_DOMAIN/\$DOMAIN/g\" \"\$TARGET_CONF\"
-sed -i \"s|\$BAUKASTEN_PATH|\$TARGET_PATH|g\" \"\$TARGET_CONF\"
-sed -i \"s/cms.baukasten.access.log/\$DOMAIN.access.log/g\" \"\$TARGET_CONF\"
-sed -i \"s/cms.baukasten.error.log/\$DOMAIN.error.log/g\" \"\$TARGET_CONF\"
-
-# Test and reload Nginx
-nginx -t
-systemctl reload nginx
-echo -e \"${GREEN}[INFO]${NC} ✓ Nginx configuration for \$DOMAIN synced and reloaded.\"
-" || log_warn "Could not sync Nginx configuration automatically. Please do it manually."
+ssh hetzner-root "sudo /usr/local/bin/sync-nginx-config $DOMAIN" || log_warn "Could not sync Nginx configuration automatically. Please do it manually."
 echo ""
 
 # Re-run deployment if it failed due to permissions
