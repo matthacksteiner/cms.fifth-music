@@ -99,9 +99,11 @@ sudo apt update && sudo apt upgrade -y
 cd /var/www/cms.yourproject.com
 composer update
 
-# Writable dirs and cache
-# The deploy script creates: content/, site/languages/, site/{accounts,sessions,cache}/, storage/, public/media/plugins/
-# It also clears storage/cache and storage/sessions and adds empty media/plugins files to avoid first-load 404s.
+# Fix permissions (if needed)
+sudo fix-kirby-permissions cms.yourproject.com
+
+# Clear Kirby cache
+ssh hetzner-kirby "bash -c 'cd /var/www/cms.yourproject.com && rm -rf storage/cache/* storage/sessions/* 2>/dev/null || true'"
 
 # Reload services
 sudo service nginx reload
@@ -114,6 +116,23 @@ sudo nginx -t
 sudo systemctl restart nginx
 sudo systemctl restart php8.3-fpm
 ```
+
+## ⚡ Performance Optimization
+
+```bash
+# Apply all performance optimizations (one-time)
+ssh hetzner-root
+bash /tmp/optimize-server-performance.sh
+
+# Or upload and run
+scp server-setup/optimize-server-performance.sh hetzner-root:/tmp/
+ssh hetzner-root "bash /tmp/optimize-server-performance.sh"
+
+# Fix site permissions
+ssh hetzner-kirby "sudo fix-kirby-permissions cms.yourproject.com"
+```
+
+**See `PERFORMANCE-OPTIMIZATION.md` for detailed performance tuning guide.**
 
 ## 🔐 SSL Management
 

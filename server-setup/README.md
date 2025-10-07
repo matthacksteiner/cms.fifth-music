@@ -98,12 +98,22 @@ sudo /usr/local/bin/add-ssl-cert cms.yourproject.com admin@yourproject.com
 
 - **`setup-server.sh`** - Initial VPS configuration (run once)
 - **`deploy-site.sh`** - Deploy/update a CMS instance (run from local machine)
+- **`optimize-server-performance.sh`** - Apply performance optimizations to server
+- **`fix-kirby-permissions.sh`** - Fix file permissions for Kirby sites
 - **`add-site.sh`** - Add new site on server (run on server) - created by setup-server.sh
 - **`remove-site.sh`** - Remove site from server (run on server) - created by setup-server.sh
 
 ### Configuration Templates
 
-- **`nginx-site.conf.template`** - Nginx virtual host template
+- **`nginx-site.conf.template`** - Nginx virtual host template (optimized for Kirby)
+
+### Documentation
+
+- **`PERFORMANCE-OPTIMIZATION.md`** - Comprehensive performance tuning guide
+- **`PERMISSIONS.md`** - Kirby permissions reference and troubleshooting
+- **`QUICK-REFERENCE.md`** - Quick command reference
+- **`EXISTING-SERVER-SETUP.md`** - Guide for existing Hetzner server setup
+- **`MIGRATE-CHILDREN.md`** - Guide for migrating child repositories
 
 ### GitHub Actions
 
@@ -323,6 +333,20 @@ Value: YOUR_SERVER_IP
 TTL: 3600
 ```
 
+## ⚡ Performance Optimization
+
+After initial setup, optimize your server for maximum performance:
+
+```bash
+# Upload and run optimization script
+scp server-setup/optimize-server-performance.sh hetzner-root:/tmp/
+ssh hetzner-root "bash /tmp/optimize-server-performance.sh"
+```
+
+**See `PERFORMANCE-OPTIMIZATION.md` for complete performance tuning guide.**
+
+---
+
 ## 🎯 Next Steps
 
 1. ✅ Run `setup-server.sh` on your fresh Hetzner VPS
@@ -330,8 +354,22 @@ TTL: 3600
 3. ✅ Deploy your first CMS instance
 4. ✅ Set up SSL certificate
 5. ✅ Configure DNS
-6. ✅ Test the deployment workflow
+6. ✅ **Optimize server performance** (run `optimize-server-performance.sh`)
+7. ✅ Enable Kirby page cache in each site's `config.php`
 
 ---
 
-**Created for Baukasten CMS Template** Last Updated: January 2025
+## 📚 Complete Documentation
+
+- **Quick Start:** This file
+- **Performance:** `PERFORMANCE-OPTIMIZATION.md`
+- **Permissions:** `PERMISSIONS.md`
+- **Commands:** `QUICK-REFERENCE.md`
+- **Migration:** `MIGRATE-CHILDREN.md`
+- **Existing Server:** `EXISTING-SERVER-SETUP.md`
+
+---
+
+**Created for Baukasten CMS Template**  
+**Last Updated:** October 2025  
+**Optimized for:** Hetzner VPS + Kirby 5.1.2+
