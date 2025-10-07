@@ -53,7 +53,7 @@ jobs:
             cd /var/www/${{ secrets.DEPLOYMENT_PATH }}/
             composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
 
-      - name: Set permissions and clear cache
+      - name: Clear cache
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.DEPLOYMENT_HOST }}
@@ -61,17 +61,5 @@ jobs:
           key: ${{ secrets.DEPLOY_KEY_PRIVATE }}
           script: |
             cd /var/www/${{ secrets.DEPLOYMENT_PATH }}/
-            sudo chown -R ${{ secrets.DEPLOYMENT_USER }}:www-data .
-            sudo chmod -R 755 .
-            sudo chmod -R 775 storage public/media site/cache
-            bash -c 'rm -rf storage/cache/* storage/sessions/*'
-
-      - name: Reload services
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.DEPLOYMENT_HOST }}
-          username: ${{ secrets.DEPLOYMENT_USER }}
-          key: ${{ secrets.DEPLOY_KEY_PRIVATE }}
-          script: |
-            sudo service php8.3-fpm reload
-            sudo service nginx reload
+            # Clear Kirby cache after deployment
+            bash -c 'rm -rf storage/cache/* storage/sessions/* 2>/dev/null || true'
