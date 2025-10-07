@@ -16,7 +16,8 @@ setup-baukasten-project.sh
 update-template-version.sh
 server-setup/
 
-
+# Documentation for the template itself
+docs/
 
 # Environment files (child repositories will have their own)
 .env
