@@ -141,11 +141,53 @@ log_info "==================================================================="
 log_info "  Migration Initiated!"
 log_info "==================================================================="
 echo ""
-log_info "✓ GitHub Actions will deploy to Hetzner automatically"
+log_info "✓ GitHub Actions deployment triggered"
+echo ""
+log_info "Waiting for GitHub Actions to complete (checking every 10 seconds)..."
+
+# Wait for GitHub Actions to complete (with timeout)
+TIMEOUT=300  # 5 minutes
+ELAPSED=0
+while [ $ELAPSED -lt $TIMEOUT ]; do
+    # Check workflow status
+    STATUS=$(gh run list -R "$GITHUB_REPO" --limit 1 --json status --jq '.[0].status' 2>/dev/null || echo "unknown")
+
+    if [ "$STATUS" = "completed" ]; then
+        CONCLUSION=$(gh run list -R "$GITHUB_REPO" --limit 1 --json conclusion --jq '.[0].conclusion')
+        if [ "$CONCLUSION" = "success" ]; then
+            log_info "✓ GitHub Actions deployment completed successfully!"
+            break
+        elif [ "$CONCLUSION" = "failure" ]; then
+            log_warn "GitHub Actions deployment failed, but continuing with permission fix..."
+            break
+        fi
+    fi
+
+    sleep 10
+    ELAPSED=$((ELAPSED + 10))
+    echo -n "."
+done
+echo ""
+
+if [ $ELAPSED -ge $TIMEOUT ]; then
+    log_warn "Timeout waiting for deployment, continuing with permission fix..."
+fi
+
+# Fix permissions on server (this ensures rsync can write on next deployment)
+log_info "Fixing permissions on server for $DOMAIN..."
+ssh hetzner-root "chown -R kirbyuser:www-data /var/www/$DOMAIN 2>/dev/null || true" || log_warn "Could not set ownership (site may not exist yet)"
+ssh hetzner-kirby "sudo fix-kirby-permissions $DOMAIN 2>/dev/null || true" || log_warn "Could not fix permissions (site may not exist yet)"
+log_info "✓ Permissions fixed"
+echo ""
+
+# Re-run deployment if it failed due to permissions
+log_info "Re-running GitHub Actions deployment to ensure all files are synced..."
+gh workflow run deploy-hetzner.yml -R "$GITHUB_REPO" 2>/dev/null || log_warn "Could not trigger re-run automatically"
+
 echo ""
 echo "📝 Next Manual Steps:"
 echo ""
-echo "1. ⏳ Wait for GitHub Actions to complete"
+echo "1. ⏳ Wait for final GitHub Actions deployment to complete"
 echo "   Check: https://github.com/$GITHUB_REPO/actions"
 echo ""
 echo "2. 🔒 Add SSL certificate on server:"
