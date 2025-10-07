@@ -22,7 +22,7 @@ jobs:
       - name: Deploy files via rsync
         uses: Burnett01/rsync-deployments@6.0.0
         with:
-          switches: -avzr --delete --exclude="content" --exclude="site/languages" --exclude=".vscode" --exclude=".git" --exclude=".env" --exclude="node_modules" --exclude="public/media" --exclude="vendor" --exclude="kirby" --exclude="storage/cache" --exclude="storage/sessions" --exclude=".DS_Store" --exclude="server-setup" --exclude="docs"
+          switches: -avzr --delete --exclude="content" --exclude="site/languages" --exclude="site/accounts" --exclude=".vscode" --exclude=".git" --exclude=".env" --exclude="node_modules" --exclude="public/media" --exclude="vendor" --exclude="kirby" --exclude="storage" --exclude=".DS_Store" --exclude="server-setup" --exclude="docs"
           remote_path: /var/www/${{ secrets.DEPLOYMENT_PATH }}/
           remote_host: ${{ secrets.DEPLOYMENT_HOST }}
           remote_user: ${{ secrets.DEPLOYMENT_USER }}
