@@ -59,7 +59,7 @@ class PageMeta
         $site = $this->page->site();
         $frontendUrl = $site->frontendUrl();
 
-        if ($frontendUrl) {
+        if (!empty($frontendUrl)) {
             $frontendUrl = rtrim($frontendUrl, '/');
             $pageUrl = $this->page->url();
             $cmsUrl = $this->kirby->url('index');
@@ -79,7 +79,7 @@ class PageMeta
             $allLanguages = $this->kirby->languages();
             $defaultLanguage = $this->kirby->defaultLanguage();
 
-            if (count($allLanguages) === 1 || (option('prefixDefaultLocale') === false)) {
+            if ($defaultLanguage && (count($allLanguages) === 1 || (option('prefixDefaultLocale') === false))) {
                 $defaultCode = $defaultLanguage->code();
 
                 // Handle both patterns: /de/ and /de (for home page)
