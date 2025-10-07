@@ -115,17 +115,30 @@ EOF'"
 log_info "Installing Composer dependencies on server..."
 ssh $SSH_USER@$SERVER_HOST "cd /var/www/$SITE_DOMAIN && composer install --no-dev --optimize-autoloader"
 
-# Set proper permissions
-log_info "Setting file permissions..."
-ssh $SSH_USER@$SERVER_HOST "sudo chown -R $SSH_USER:www-data /var/www/$SITE_DOMAIN && \
-    sudo chmod -R 755 /var/www/$SITE_DOMAIN && \
-    sudo chmod -R 775 /var/www/$SITE_DOMAIN/storage && \
-    sudo chmod -R 775 /var/www/$SITE_DOMAIN/public/media && \
-    sudo chmod -R 775 /var/www/$SITE_DOMAIN/site/cache"
+# Prepare writable directories, default language, panel assets, and permissions
+log_info "Preparing writable directories, default language and panel assets..."
+ssh $SSH_USER@$SERVER_HOST "bash -lc 'set -e; \
+  cd /var/www/$SITE_DOMAIN; \
+  # ensure required dirs exist \
+  mkdir -p content site/languages site/accounts site/sessions site/cache public/media/plugins storage; \
+  # create default language en if missing \
+  if [ ! -f site/languages/en.php ]; then \
+    cat > site/languages/en.php <<\"PHP\"\n<?php\nreturn [\n  \"code\" => \"en\",\n  \"default\" => true,\n  \"direction\" => \"ltr\",\n  \"locale\" => [\n    \"LC_ALL\" => \"en_US\",\n  ],\n  \"name\" => \"English\",\n  \"url\" => \"/\"\n];\nPHP\n  fi; \
+  # create panel plugin asset placeholders to avoid 404s \
+  : > public/media/plugins/index.css; \
+  : > public/media/plugins/index.js; \
+  # set ownership and permissions \
+  sudo chown -R $SSH_USER:www-data /var/www/$SITE_DOMAIN; \
+  sudo chmod -R 755 /var/www/$SITE_DOMAIN; \
+  find content site public/media storage -type d -exec sudo chmod 2775 {} +; \
+  find content site public/media storage -type f -exec sudo chmod 664 {} +; \
+  # keep cache directories writable \
+  sudo chmod -R 775 site/cache || true; \
+  # clear caches \
+  rm -rf storage/cache/* storage/sessions/* 2>/dev/null || true; \
+  echo READY'"
 
-# Clear cache
-log_info "Clearing Kirby cache..."
-ssh $SSH_USER@$SERVER_HOST "rm -rf /var/www/$SITE_DOMAIN/storage/cache/* /var/www/$SITE_DOMAIN/storage/sessions/*"
+# No-op cache clear already handled above
 
 log_info "==================================================================="
 log_info "  Deployment Complete!"

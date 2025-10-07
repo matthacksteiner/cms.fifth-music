@@ -55,11 +55,14 @@ Or use it interactively (just provide the site domain):
 
 **What this does:**
 - Creates site directory on server
-- Syncs your CMS files via rsync
+- Syncs your CMS files via rsync (excludes content/media/vendor/kirby)
 - Creates `.env` file
 - Installs Composer dependencies
-- Sets correct permissions
-- Clears cache
+- Creates required writable directories: `content/`, `site/languages/`, `site/{accounts,sessions,cache}/`, `public/media/plugins/`, `storage/`
+- Ensures default language `site/languages/en.php` exists (English, default)
+- Pre-creates empty `public/media/plugins/index.css` and `index.js` to avoid Panel 404s on first load
+- Sets ownership to `kirbyuser:www-data` and safe permissions (dirs 2775, files 664)
+- Clears caches
 
 ## Step 3: Add SSL Certificate
 

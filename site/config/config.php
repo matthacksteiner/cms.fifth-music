@@ -108,6 +108,10 @@ return [
 		[
 			'pattern' => 'sitemap.xml',
 			'action' => function () {
+				if (class_exists(\BaukastenMeta\Meta\Sitemap::class) === false) {
+					return new Kirby\Cms\Response('<urlset></urlset>', 'application/xml');
+				}
+
 				$sitemap = BaukastenMeta\Meta\Sitemap::factory();
 				$xml = $sitemap->generate();
 

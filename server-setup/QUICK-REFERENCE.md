@@ -99,8 +99,9 @@ sudo apt update && sudo apt upgrade -y
 cd /var/www/cms.yourproject.com
 composer update
 
-# Clear Kirby cache
-rm -rf storage/cache/* storage/sessions/*
+# Writable dirs and cache
+# The deploy script creates: content/, site/languages/, site/{accounts,sessions,cache}/, storage/, public/media/plugins/
+# It also clears storage/cache and storage/sessions and adds empty media/plugins files to avoid first-load 404s.
 
 # Reload services
 sudo service nginx reload
