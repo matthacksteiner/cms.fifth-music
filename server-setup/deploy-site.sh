@@ -115,28 +115,13 @@ EOF'"
 log_info "Installing Composer dependencies on server..."
 ssh $SSH_USER@$SERVER_HOST "cd /var/www/$SITE_DOMAIN && composer install --no-dev --optimize-autoloader"
 
-# Prepare writable directories, default language, panel assets, and permissions
-log_info "Preparing writable directories, default language and panel assets..."
-ssh $SSH_USER@$SERVER_HOST "bash -lc 'set -e; \
-  cd /var/www/$SITE_DOMAIN; \
-  # ensure required dirs exist \
-  mkdir -p content site/languages site/accounts site/sessions site/cache public/media/plugins storage; \
-  # create default language en if missing \
-  if [ ! -f site/languages/en.php ]; then \
-    cat > site/languages/en.php <<\"PHP\"\n<?php\nreturn [\n  \"code\" => \"en\",\n  \"default\" => true,\n  \"direction\" => \"ltr\",\n  \"locale\" => [\n    \"LC_ALL\" => \"en_US\",\n  ],\n  \"name\" => \"English\",\n  \"url\" => \"/\"\n];\nPHP\n  fi; \
-  # create panel plugin asset placeholders to avoid 404s \
-  : > public/media/plugins/index.css; \
-  : > public/media/plugins/index.js; \
-  # set ownership and permissions \
-  sudo chown -R $SSH_USER:www-data /var/www/$SITE_DOMAIN; \
-  sudo chmod -R 755 /var/www/$SITE_DOMAIN; \
-  find content site public/media storage -type d -exec sudo chmod 2775 {} +; \
-  find content site public/media storage -type f -exec sudo chmod 664 {} +; \
-  # keep cache directories writable \
-  sudo chmod -R 775 site/cache || true; \
-  # clear caches \
-  rm -rf storage/cache/* storage/sessions/* 2>/dev/null || true; \
-  echo READY'"
+# Fix permissions for writable directories (in case rsync changed them)
+log_info "Setting correct permissions for writable directories..."
+ssh $SSH_USER@$SERVER_HOST "bash -lc 'cd /var/www/$SITE_DOMAIN && \
+  sudo chown -R $SSH_USER:www-data content site/languages site/accounts site/sessions site/cache public/media storage 2>/dev/null || true && \
+  find content site/languages site/accounts site/sessions site/cache public/media storage -type d -exec chmod 2775 {} + 2>/dev/null || true && \
+  find content site/languages site/accounts site/sessions site/cache public/media storage -type f -exec chmod 664 {} + 2>/dev/null || true && \
+  bash -c \"rm -rf storage/cache/* storage/sessions/* 2>/dev/null || true\"'"
 
 # No-op cache clear already handled above
 
