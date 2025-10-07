@@ -51,7 +51,7 @@ jobs:
           key: ${{ secrets.DEPLOY_KEY_PRIVATE }}
           script: |
             cd /var/www/${{ secrets.DEPLOYMENT_PATH }}/
-            composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
+            composer install --no-interaction --prefer-dist --optimize-autoloader
 
       - name: Clear cache
         uses: appleboy/ssh-action@v1.0.3
